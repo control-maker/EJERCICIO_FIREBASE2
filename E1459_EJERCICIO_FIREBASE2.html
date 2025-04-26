@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Citas - Salón de Belleza</title>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDRflMEmH2nUXh_59VJ0Iqu6YKtMVd7uMw",
+      authDomain: "test3-d2d2b.firebaseapp.com",
+      projectId: "test3-d2d2b",
+      storageBucket: "test3-d2d2b.firebasestorage.app",
+      messagingSenderId: "514800333934",
+      appId: "1:514800333934:web:7816c84badc50e1721227f"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("citaForm");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const nombre = document.getElementById("nombre").value;
+        const correo = document.getElementById("correo").value;
+        const telefono = document.getElementById("telefono").value;
+        const fecha = document.getElementById("fecha").value;
+        const motivo = document.getElementById("motivo").value;
+
+        try {
+          await addDoc(collection(db, "citas"), {
+            nombre,
+            correo,
+            telefono,
+            fecha,
+            motivo
+          });
+          alert("¡Cita registrada exitosamente!");
+          form.reset();
+        } catch (error) {
+          console.error("Error registrando la cita: ", error);
+          alert("Error registrando la cita.");
+        }
+      });
+    });
+  </script>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #f6becd);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #e91e63;
+      margin-bottom: 20px;
+    }
+
+    label {
+      color: #d81b60;
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      background-color: #f06292;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #e91e63;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Agendar Cita</h2>
+    <form id="citaForm">
+      <label for="nombre">Nombre Completo</label>
+      <input type="text" id="nombre" required>
+
+      <label for="correo">Correo Electrónico</label>
+      <input type="email" id="correo" required>
+
+      <label for="telefono">Teléfono</label>
+      <input type="tel" id="telefono" required>
+
+      <label for="fecha">Fecha de Cita</label>
+      <input type="date" id="fecha" required>
+
+      <label for="motivo">Motivo de la Cita</label>
+      <textarea id="motivo" rows="3" required></textarea>
+
+      <button type="submit">Registrar Cita</button>
+    </form>
+  </div>
+</body>
+</html>
