@@ -30,6 +30,7 @@
         const telefono = document.getElementById("telefono").value;
         const fecha = document.getElementById("fecha").value;
         const motivo = document.getElementById("motivo").value;
+        const observaciones = document.getElementById("observaciones").value;
 
         try {
           await addDoc(collection(db, "citas"), {
@@ -37,7 +38,8 @@
             correo,
             telefono,
             fecha,
-            motivo
+            motivo,
+            observaciones
           });
           alert("¡Cita registrada exitosamente!");
           form.reset();
@@ -127,6 +129,9 @@
 
       <label for="motivo">Motivo de la Cita</label>
       <textarea id="motivo" rows="3" required></textarea>
+
+      <label for="observaciones">Observaciones</label>
+      <textarea id="observaciones" rows="3"></textarea>
 
       <button type="submit">Registrar Cita</button>
     </form>
